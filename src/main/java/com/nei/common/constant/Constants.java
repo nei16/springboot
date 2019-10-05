@@ -12,10 +12,15 @@ public interface Constants {
      */
     String DEFAULT_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
+    /**
+     * yyyy-MM-dd HH:mm:ss
+     */
     FastDateFormat DEFAULT_DATE_FORMAT = FastDateFormat.getInstance(DEFAULT_DATE_PATTERN);
 
     String EMPTY = "";
 
     String COMMA = ",";
+
+    String LINE_THROUGH = "-";
 
 }
