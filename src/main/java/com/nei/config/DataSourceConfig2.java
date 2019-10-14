@@ -4,7 +4,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -57,8 +56,8 @@ public class DataSourceConfig2 {
     }
 
     @Bean(name = SQL_SESSION_TEMPLATE)
-    public SqlSessionTemplate sqlSessionTemplate2(@Qualifier(SQL_SESSION_FACTORY) SqlSessionFactory sqlSessionFactory2) throws Exception {
-        return new SqlSessionTemplate(sqlSessionFactory2);
+    public SqlSessionTemplate sqlSessionTemplate2() throws Exception {
+        return new SqlSessionTemplate(sqlSessionFactory2());
     }
 
 }
