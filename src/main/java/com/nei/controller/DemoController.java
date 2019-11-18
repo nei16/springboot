@@ -23,10 +23,19 @@ import java.util.HashMap;
 @RequestMapping("demo")
 public class DemoController {
 
+//    @ApolloConfig
+//    private Config config;
+
     @Autowired
     private TemplateMapper templateMapper;
     @Autowired
     private UserMapper userMapper;
+
+    /*@GetMapping("getApolloConfig")
+    public HashMap<String, String> getConfig(String key) {
+        String property = config.getProperty(key, "");
+        return MapUtil.newHashMap("property", property);
+    }*/
 
     @GetMapping("template")
     public Template template(Long id) {

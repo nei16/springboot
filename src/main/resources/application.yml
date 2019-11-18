@@ -71,3 +71,11 @@ swagger:
 logging:
   level:
     com.nei.mapper: debug
+
+app:
+  id: joint-card
+apollo:
+  meta: "http://192.168.9.176:8080"
+  bootstrap:
+    enabled: true
+    namespaces: java.test,application
