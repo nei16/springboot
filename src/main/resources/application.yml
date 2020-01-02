@@ -1,18 +1,18 @@
-server:
-  port: 80
 spring:
+  profiles:
+    active: ${env:local}
   main:
     banner-mode: 'off'
   jackson:
     time-zone: GMT+8
+  http:
+    converters:
+      preferred-json-mapper: jackson
   datasource:
     first:
       type: com.zaxxer.hikari.HikariDataSource
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://192.168.130.88:3306/test?autoReconnect=true&autoReconnectForPools=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
-      username: root
-      password: root123
-      minimum-idle: 5
+      minimum-idle: 1
       # 空闲连接存活最大时间，默认600000（10分钟）
       idle-timeout: 120000
       # 连接池最大连接数，默认是10
@@ -30,10 +30,7 @@ spring:
     second:
       type: com.zaxxer.hikari.HikariDataSource
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://192.168.130.88:3306/test?autoReconnect=true&autoReconnectForPools=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
-      username: root
-      password: root123
-      minimum-idle: 5
+      minimum-idle: 1
       idle-timeout: 120000
       maximum-pool-size: 10
       auto-commit: true
@@ -41,6 +38,36 @@ spring:
       max-lifetime: 180000
       connection-timeout: 30000
       connection-test-query: SELECT 1
+
+server:
+  port: 80
+
+swagger:
+  enabled: true
+  title: springboot api文档
+  description: springboot api文档
+  version: 1.0.0
+  basePackage: com.nei.controller
+
+logging:
+  level:
+    root: info
+    com.nei.mapper: debug
+
+---
+spring:
+  profiles: local
+
+  datasource:
+    first:
+      jdbc-url: jdbc:mysql://192.168.130.88:3306/test?autoReconnect=true&autoReconnectForPools=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+      username: root
+      password: root123
+
+    second:
+      jdbc-url: jdbc:mysql://192.168.130.88:3306/test?autoReconnect=true&autoReconnectForPools=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+      username: root
+      password: root123
 
   redis:
     host: 192.168.130.88
@@ -57,20 +84,50 @@ spring:
       simple:
         acknowledge-mode: manual
 
-  http:
-    converters:
-      preferred-json-mapper: jackson
+---
+spring:
+  profiles: company
 
-swagger:
-  enabled: true
-  title: springboot api文档
-  description: springboot api文档
-  version: 1.0.0
-  basePackage: com.nei.controller
+  datasource:
+    first:
+      jdbc-url: jdbc:mysql://192.168.9.117:3306/test?autoReconnect=true&autoReconnectForPools=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+      username: dev_prod
+      password: dev_prod
 
-logging:
-  level:
-    com.nei.mapper: debug
+    second:
+      jdbc-url: jdbc:mysql://106.75.136.76:33010/join_card1?autoReconnect=true&autoReconnectForPools=true&allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+      username: t_mag_search
+      password: sWBhU&X*ZZPBRjq!LRpi
+
+    redis:
+      host: 106.75.129.243
+      port: 6101
+      password:
+      timeout: 10000ms    #连接超时时间（毫秒）
+      lettuce:  # Lettuce
+        pool:
+          max-active: 20                        # 最大连接数（负值表示无限制）
+          max-idle: 2                              # 最大空闲连接
+          min-idle: 1                              # 最小空闲连接
+          max-wait: -1ms                     # 最大阻塞等待时间（负值表示无限制）
+        shutdown-timeout: 100ms   # 关闭超时时间
+
+      jedis:
+        pool:
+          max-active: 20      #最大连接数（负值表示无限制）
+          max-idle: 10          # 最大空闲连接
+          min-idle: 1             # 最小空闲连接
+          max-wait: -1ms    # 最大阻塞等待时间（负值表示无限制）
+
+  rabbitmq:
+    username: mqadmin
+    password: mqadmin
+    host: 192.168.9.24
+    port: 5672
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: manual
 
 app:
   id: joint-card
