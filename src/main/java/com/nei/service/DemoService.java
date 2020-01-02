@@ -1,7 +1,7 @@
 package com.nei.service;
 
 import com.battcn.boot.extend.configuration.redis.RedisParam;
-import com.nei.common.redis.RedisLock;
+import com.nei.common.redis.lock.RedisLock;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

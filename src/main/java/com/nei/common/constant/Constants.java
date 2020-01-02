@@ -23,4 +23,6 @@ public interface Constants {
 
     String LINE_THROUGH = "-";
 
+    String UNDERLINE = "_";
+
 }

@@ -1,4 +1,4 @@
-package com.nei.common.redis;
+package com.nei.common.redis.lock;
 
 import com.battcn.boot.extend.configuration.redis.RedisKeyGenerator;
 import com.battcn.boot.extend.configuration.redis.lock.RedisLockHelper;
@@ -41,7 +41,7 @@ public class RedisLockAspect {
     /**
      * 分布式锁确保只会有一个线程执行成功
      */
-    @Around("execution(public * *(..)) && @annotation(com.nei.common.redis.RedisLock)")
+    @Around("execution(public * *(..)) && @annotation(com.nei.common.redis.lock.RedisLock)")
     public Object interceptor(ProceedingJoinPoint pjp) {
         Method method = ((MethodSignature) pjp.getSignature()).getMethod();
         RedisLock lock = method.getAnnotation(RedisLock.class);
@@ -70,7 +70,7 @@ public class RedisLockAspect {
     /**
      * 保证多个线程依次执行，不会同时执行
      */
-//    @Around("execution(public * *(..)) && @annotation(com.nei.common.redis.RedisLock)")
+//    @Around("execution(public * *(..)) && @annotation(com.nei.common.redis.lock.RedisLock)")
     public Object interceptor1(ProceedingJoinPoint pjp) {
         Method method = ((MethodSignature) pjp.getSignature()).getMethod();
         RedisLock lock = method.getAnnotation(RedisLock.class);

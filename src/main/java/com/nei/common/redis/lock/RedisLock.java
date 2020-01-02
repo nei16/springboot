@@ -1,4 +1,4 @@
-package com.nei.common.redis;
+package com.nei.common.redis.lock;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
