@@ -3,7 +3,6 @@ package com.nei.common.aspect;
 import com.nei.common.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -39,7 +38,6 @@ public class LogRequestAspect {
         long endTime = System.currentTimeMillis();
         String method = request.getMethod();
         String uri = request.getRequestURI();
-        String ip = request.getRemoteAddr();
         Object[] args = pjp.getArgs();
         Object result = pjp.proceed();
         String response = JsonUtil.json(result);
@@ -53,12 +51,8 @@ public class LogRequestAspect {
                 params = JsonUtil.json(object);
             }
         }
-        log.info("ip:{}, method:{}, uri:{}, params:{}, response:{}, elapsed:{}ms.", ip, method, uri, params, response, (endTime - startTime));
+        log.info("{}, {}, params:{}, response:{}, elapsed:{}ms.", method, uri, params, response, (endTime - startTime));
         return result;
-    }
-
-    @After("pointcut()")
-    public void after()  {
     }
 
     private HttpServletRequest getHttpServletRequest() {
